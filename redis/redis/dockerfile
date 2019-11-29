@@ -1,0 +1,3 @@
+FROM redis:4.0.10
+COPY kill /usr/bin/
+RUN chmod +x /usr/bin/kill

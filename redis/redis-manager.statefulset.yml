@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: redis-manager
+  namespace: wuda
+spec:
+  serviceName: "redis-manager-service"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-manager
+        appCluster: redis-cluster
+    spec:
+      restartPolicy: Always
+      nodeName: "vm-test-k8s-m1"
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: redis-trib
+        image: "redis-trib:v4.0.10"
+        command:
+          - "tail"
+        args:
+          - "-f"
+          - "/dev/null"
+        ports:
+            - name: redis
+              containerPort: 6379
+              protocol: "TCP"
+            - name: cluster
+              containerPort: 16379
+              protocol: "TCP"

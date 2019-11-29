@@ -1,0 +1,7 @@
+FROM centos:centos7.6.1810
+
+COPY redis-trib /usr/bin/
+RUN yum install bind-utils -y && chmod +x /usr/bin/redis-trib
+RUN yum install epel-release -y 
+RUN yum install ruby rubygem-redis -y 
+ENTRYPOINT ["tail", "-f", "/dev/null"]
